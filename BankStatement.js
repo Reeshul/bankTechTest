@@ -1,5 +1,3 @@
-function BankStatement(a, b) {
-  return a + b;
-}
+class BankStatement {}
 
 module.exports = BankStatement;
