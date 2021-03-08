@@ -8,9 +8,18 @@ class BankStatement {
 
   deposit(amount, dateArray) {
     this.balance += amount;
-    this.statement += `${dateArrayToString(dateArray)} || ${amount.toFixed(
-      2
-    )} || || ${this.balance.toFixed(2)}\n`;
+    this.statement =
+      `${dateArrayToString(dateArray)} || ${amount.toFixed(
+        2
+      )} || || ${this.balance.toFixed(2)}\n` + this.statement;
+  }
+
+  withdraw(amount, dateArray) {
+    this.balance -= amount;
+    this.statement =
+      `${dateArrayToString(dateArray)} || || ${amount.toFixed(
+        2
+      )} || ${this.balance.toFixed(2)}\n` + this.statement;
   }
 
   printStatement() {
