@@ -21,7 +21,7 @@ describe("Bank Statement", () => {
           "10/01/2012 || 1000.00 || || 1000.00"
       );
     });
-    it("prints a balance of 3000 if a deposit of 2000 is made", () => {
+    it("prints a balance of 3000 if a deposit of 2000 is made on 13/01/2012", () => {
       newStatement.deposit(depositAmount, dateToString(13, 1, 2012));
       expect(newStatement.printStatement()).toEqual(
         "date || credit || debit || balance\n" +
@@ -29,7 +29,7 @@ describe("Bank Statement", () => {
           "10/01/2012 || 1000.00 || || 1000.00"
       );
     });
-    it("prints a balance of 2500 if a deposit of 2000 is made followed by a 500 withdrawal", () => {
+    it("prints a balance of 2500 if a deposit of 2000 is made on 13/01/2012 and a 500 withdrawal on 14/01/2012", () => {
       newStatement.deposit(depositAmount, dateToString(13, 1, 2012));
       newStatement.withdraw(withdrawalAmount, dateToString(14, 1, 2012));
       expect(newStatement.printStatement()).toEqual(
@@ -51,14 +51,6 @@ describe("Bank Statement", () => {
     });
   });
 });
-
-const todaysDate = () => {
-  const today = new Date();
-  const DD = today.getDate().toString().padStart(2, "0");
-  const MM = (today.getMonth() + 1).toString().padStart(2, "0");
-  const YYYY = today.getFullYear();
-  return `${DD}/${MM}/${YYYY}`;
-};
 
 const dateToString = (dd, mm, yyyy) => {
   const date = new Date(yyyy, mm, dd);

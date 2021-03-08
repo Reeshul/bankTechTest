@@ -13,5 +13,3 @@ const dateToString = (dd, mm, yyyy) => {
   const YYYY = date.getFullYear();
   return `${DD}/${MM}/${YYYY}`;
 };
-
-module.exports = helpers;
