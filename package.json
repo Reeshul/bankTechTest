@@ -2,7 +2,7 @@
   "name": "bankTechTest",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "BankStatement.js",
   "scripts": {
     "test": "jest --coverage"
   },

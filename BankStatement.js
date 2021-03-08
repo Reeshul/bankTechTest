@@ -1,3 +1,5 @@
+"use-strict";
+
 class BankStatement {
   constructor() {
     this.balance = 1000;
@@ -6,7 +8,7 @@ class BankStatement {
 
   deposit(amount, dateArray) {
     this.balance += amount;
-    this.statement += `${convertDateToString(dateArray)} || ${amount.toFixed(
+    this.statement += `${dateArrayToString(dateArray)} || ${amount.toFixed(
       2
     )} || || ${this.balance.toFixed(2)}\n`;
   }
@@ -20,12 +22,7 @@ class BankStatement {
   }
 }
 
-function dateArrayToString([DD, MM, YYYY]) {
-  return `${DD}/${MM}/${YYYY}`;
-}
-
-function convertDateToString([Day, Month, Year]) {
-  return new Date(Year, Month - 1, Day).toLocaleDateString("en-GB");
-}
+const dateArrayToString = ([Day, Month, Year]) =>
+  new Date(Year, Month - 1, Day).toLocaleDateString("en-GB");
 
 module.exports = BankStatement;
