@@ -6,23 +6,21 @@ class BankStatement {
     this.statement = "";
   }
 
-  deposit(amount, dateArray) {
+  deposit(amount) {
     this.balance += amount;
-    const depositDate = dateArrayToString(dateArray);
     const depositAmount = amount.toFixed(2);
     const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${depositDate} || ${depositAmount} || || ${currentBalance}\n` +
+      `${todaysDate()} || ${depositAmount} || || ${currentBalance}\n` +
       this.statement;
   }
 
-  withdraw(amount, dateArray) {
+  withdraw(amount) {
     this.balance -= amount;
-    const withdrawalDate = dateArrayToString(dateArray);
     const withdrawalAmount = amount.toFixed(2);
     const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${withdrawalDate} || || ${withdrawalAmount} || ${currentBalance}\n` +
+      `${todaysDate()} || || ${withdrawalAmount} || ${currentBalance}\n` +
       this.statement;
   }
 
@@ -35,7 +33,12 @@ class BankStatement {
   }
 }
 
-const dateArrayToString = ([Day, Month, Year]) =>
-  new Date(Year, Month - 1, Day).toLocaleDateString("en-GB");
+const todaysDate = () => {
+  const today = new Date();
+  const DD = today.getDate().toString().padStart(2, "0");
+  const MM = (today.getMonth() + 1).toString().padStart(2, "0");
+  const YYYY = today.getFullYear();
+  return `${DD}/${MM}/${YYYY}`;
+};
 
 module.exports = BankStatement;

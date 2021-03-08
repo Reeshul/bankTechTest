@@ -29,7 +29,7 @@ describe("Bank Statement", () => {
       newStatement.deposit(depositAmount, depositDate);
       expect(newStatement.printStatement()).toEqual(
         "date || credit || debit || balance\n" +
-          "13/01/2012 || 2000.00 || || 3000.00\n" +
+          `${todaysDate()} || 2000.00 || || 3000.00\n` +
           "10/01/2012 || 1000.00 || || 1000.00"
       );
     });
@@ -38,8 +38,8 @@ describe("Bank Statement", () => {
       newStatement.withdraw(withdrawalAmount, withdrawalDate);
       expect(newStatement.printStatement()).toEqual(
         "date || credit || debit || balance\n" +
-          "14/01/2012 || || 500.00 || 2500.00\n" +
-          "13/01/2012 || 2000.00 || || 3000.00\n" +
+          `${todaysDate()} || || 500.00 || 2500.00\n` +
+          `${todaysDate()} || 2000.00 || || 3000.00\n` +
           "10/01/2012 || 1000.00 || || 1000.00"
       );
     });
@@ -56,3 +56,11 @@ describe("Bank Statement", () => {
     });
   });
 });
+
+const todaysDate = () => {
+  const today = new Date();
+  const DD = today.getDate().toString().padStart(2, "0");
+  const MM = (today.getMonth() + 1).toString().padStart(2, "0");
+  const YYYY = today.getFullYear();
+  return `${DD}/${MM}/${YYYY}`;
+};
