@@ -8,18 +8,22 @@ class BankStatement {
 
   deposit(amount, dateArray) {
     this.balance += amount;
+    const depositDate = dateArrayToString(dateArray);
+    const depositAmount = amount.toFixed(2);
+    const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${dateArrayToString(dateArray)} || ${amount.toFixed(
-        2
-      )} || || ${this.balance.toFixed(2)}\n` + this.statement;
+      `${depositDate} || ${depositAmount} || || ${currentBalance}\n` +
+      this.statement;
   }
 
   withdraw(amount, dateArray) {
     this.balance -= amount;
+    const withdrawalDate = dateArrayToString(dateArray);
+    const withdrawalAmount = amount.toFixed(2);
+    const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${dateArrayToString(dateArray)} || || ${amount.toFixed(
-        2
-      )} || ${this.balance.toFixed(2)}\n` + this.statement;
+      `${withdrawalDate} || || ${withdrawalAmount} || ${currentBalance}\n` +
+      this.statement;
   }
 
   printStatement() {
