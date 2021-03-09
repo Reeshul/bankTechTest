@@ -22,8 +22,12 @@ class BankStatement {
   }
 
   withdraw(amount) {
-    this.balance -= amount;
-    this.updateStatementWithWithdrawTransaction(amount);
+    if (amount <= this.balance) {
+      this.balance -= amount;
+      this.updateStatementWithWithdrawTransaction(amount);
+    } else {
+      throw new Error("Insufficient funds");
+    }
   }
 
   updateStatementWithWithdrawTransaction(amount) {

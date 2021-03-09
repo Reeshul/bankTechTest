@@ -55,4 +55,12 @@ describe("Bank Statement", () => {
       expect(newStatement.balance).toEqual(333);
     });
   });
+
+  describe("edge cases", () => {
+    it("error is thrown if withdrawal requested is higher than balance", () => {
+      expect(() => {
+        newStatement.withdraw(1001);
+      }).toThrow("Insufficient funds");
+    });
+  });
 });
