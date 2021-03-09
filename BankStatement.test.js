@@ -1,6 +1,7 @@
 "use-strict";
 
 const BankStatement = require("./BankStatement");
+const todaysDate = require("./todaysDate");
 
 let newStatement;
 let depositAmount;
@@ -42,30 +43,16 @@ describe("Bank Statement", () => {
   });
 
   describe("#deposit", () => {
-    beforeEach(() => {
-      depositAmount = 333;
-    });
     it("balance updates to 1333 if 333 is deposited", () => {
-      newStatement.deposit(depositAmount);
+      newStatement.deposit(333);
       expect(newStatement.balance).toEqual(1333);
     });
   });
 
   describe("#withdrawal", () => {
-    beforeEach(() => {
-      withdrawalAmount = 667;
-    });
     it("balance updates to 333 if 667 is withdrawn", () => {
-      newStatement.withdraw(withdrawalAmount);
+      newStatement.withdraw(667);
       expect(newStatement.balance).toEqual(333);
     });
   });
 });
-
-const todaysDate = () => {
-  const today = new Date();
-  const DD = today.getDate().toString().padStart(2, "0");
-  const MM = (today.getMonth() + 1).toString().padStart(2, "0");
-  const YYYY = today.getFullYear();
-  return `${DD}/${MM}/${YYYY}`;
-};
