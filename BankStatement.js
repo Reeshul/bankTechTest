@@ -6,23 +6,29 @@ class BankStatement {
     this.statement = "";
   }
 
-  deposit(amount, depositDate) {
-    depositDate ||= todaysDate();
+  deposit(amount) {
     this.balance += amount;
+    this.updateStatementWithDepositTransaction(amount);
+  }
+
+  updateStatementWithDepositTransaction(amount) {
     const depositAmount = amount.toFixed(2);
     const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${depositDate} || ${depositAmount} || || ${currentBalance}\n` +
+      `${todaysDate()} || ${depositAmount} || || ${currentBalance}\n` +
       this.statement;
   }
 
-  withdraw(amount, withdrawalDate) {
-    withdrawalDate ||= todaysDate();
+  withdraw(amount) {
     this.balance -= amount;
+    this.updateStatementWithWithdrawTransaction(amount);
+  }
+
+  updateStatementWithWithdrawTransaction(amount) {
     const withdrawalAmount = amount.toFixed(2);
     const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${withdrawalDate} || || ${withdrawalAmount} || ${currentBalance}\n` +
+      `${todaysDate()} || || ${withdrawalAmount} || ${currentBalance}\n` +
       this.statement;
   }
 
