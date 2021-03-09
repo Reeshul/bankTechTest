@@ -1,13 +1,12 @@
 "use-strict";
 
 const BankStatement = require("./BankStatement");
-const todaysDate = require("./todaysDate");
-
-let newStatement;
-let depositAmount;
-let withdrawalAmount;
+const helpers = require("./helpers");
 
 describe("Bank Statement", () => {
+  let newStatement;
+  let depositAmount;
+  let withdrawalAmount;
   beforeEach(() => {
     newStatement = new BankStatement();
   });
@@ -26,7 +25,7 @@ describe("Bank Statement", () => {
       newStatement.deposit(depositAmount);
       expect(newStatement.printStatement()).toEqual(
         "date || credit || debit || balance\n" +
-          `${todaysDate()} || 2000.00 || || 3000.00\n` +
+          `${helpers.todaysDate()} || 2000.00 || || 3000.00\n` +
           "10/01/2012 || 1000.00 || || 1000.00"
       );
     });
@@ -35,8 +34,8 @@ describe("Bank Statement", () => {
       newStatement.withdraw(withdrawalAmount);
       expect(newStatement.printStatement()).toEqual(
         "date || credit || debit || balance\n" +
-          `${todaysDate()} || || 500.00 || 2500.00\n` +
-          `${todaysDate()} || 2000.00 || || 3000.00\n` +
+          `${helpers.todaysDate()} || || 500.00 || 2500.00\n` +
+          `${helpers.todaysDate()} || 2000.00 || || 3000.00\n` +
           "10/01/2012 || 1000.00 || || 1000.00"
       );
     });
@@ -55,12 +54,26 @@ describe("Bank Statement", () => {
       expect(newStatement.balance).toEqual(333);
     });
   });
+});
 
-  describe("edge cases", () => {
-    it("error is thrown if withdrawal requested is higher than balance", () => {
-      expect(() => {
-        newStatement.withdraw(1001);
-      }).toThrow("Insufficient funds");
-    });
+describe("edge cases", () => {
+  let edgeStatement;
+  beforeEach(() => {
+    edgeStatement = new BankStatement();
+    edgeStatement.balance = 1000;
+  });
+  it("error is thrown if withdrawal requested is higher than balance", () => {
+    expect(() => {
+      edgeStatement.withdraw(1001);
+    }).toThrow("Insufficient funds");
+  });
+  it("amount rounded DOWN if more than 2 numbers appear after the decimal point for deposits", () => {
+    edgeStatement.deposit(314.159);
+    expect(edgeStatement.balance).not.toEqual(1314.16);
+    expect(edgeStatement.balance).toEqual(1314.15);
+  });
+  it("amount rounded if more than 2 numbers appear after the decimal point for withdrawals", () => {
+    edgeStatement.withdraw(141.429);
+    expect(edgeStatement.balance).toEqual(858.58);
   });
 });

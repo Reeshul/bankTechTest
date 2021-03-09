@@ -1,6 +1,6 @@
 "use-strict";
 
-const todaysDate = require("./todaysDate");
+const helpers = require("./helpers");
 
 class BankStatement {
   constructor() {
@@ -9,22 +9,26 @@ class BankStatement {
   }
 
   deposit(amount) {
-    this.balance += amount;
-    this.updateStatementWithDepositTransaction(amount);
+    this.balance += helpers.roundDownToTwoDecimalPlaces(amount);
+    this.updateStatementWithDepositTransaction(
+      helpers.roundDownToTwoDecimalPlaces(amount)
+    );
   }
 
   updateStatementWithDepositTransaction(amount) {
     const depositAmount = amount.toFixed(2);
     const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${todaysDate()} || ${depositAmount} || || ${currentBalance}\n` +
+      `${helpers.todaysDate()} || ${depositAmount} || || ${currentBalance}\n` +
       this.statement;
   }
 
   withdraw(amount) {
     if (amount <= this.balance) {
-      this.balance -= amount;
-      this.updateStatementWithWithdrawTransaction(amount);
+      this.balance -= helpers.roundDownToTwoDecimalPlaces(amount);
+      this.updateStatementWithWithdrawTransaction(
+        helpers.roundDownToTwoDecimalPlaces(amount)
+      );
     } else {
       throw new Error("Insufficient funds");
     }
@@ -34,7 +38,7 @@ class BankStatement {
     const withdrawalAmount = amount.toFixed(2);
     const currentBalance = this.balance.toFixed(2);
     this.statement =
-      `${todaysDate()} || || ${withdrawalAmount} || ${currentBalance}\n` +
+      `${helpers.todaysDate()} || || ${withdrawalAmount} || ${currentBalance}\n` +
       this.statement;
   }
 
