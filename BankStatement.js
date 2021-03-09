@@ -9,10 +9,14 @@ class BankStatement {
   }
 
   deposit(amount) {
-    this.balance += helpers.roundDownToTwoDecimalPlaces(amount);
-    this.updateStatementWithDepositTransaction(
-      helpers.roundDownToTwoDecimalPlaces(amount)
-    );
+    if (typeof amount !== "number") {
+      throw new Error("Funds deposited must be a number");
+    } else {
+      this.balance += helpers.roundDownToTwoDecimalPlaces(amount);
+      this.updateStatementWithDepositTransaction(
+        helpers.roundDownToTwoDecimalPlaces(amount)
+      );
+    }
   }
 
   updateStatementWithDepositTransaction(amount) {
@@ -24,13 +28,17 @@ class BankStatement {
   }
 
   withdraw(amount) {
-    if (amount <= this.balance) {
-      this.balance -= helpers.roundDownToTwoDecimalPlaces(amount);
-      this.updateStatementWithWithdrawTransaction(
-        helpers.roundDownToTwoDecimalPlaces(amount)
-      );
+    if (typeof amount !== "number") {
+      throw new Error("Funds withdrawn must be a number");
     } else {
-      throw new Error("Insufficient funds");
+      if (amount <= this.balance) {
+        this.balance -= helpers.roundDownToTwoDecimalPlaces(amount);
+        this.updateStatementWithWithdrawTransaction(
+          helpers.roundDownToTwoDecimalPlaces(amount)
+        );
+      } else {
+        throw new Error("Insufficient funds");
+      }
     }
   }
 

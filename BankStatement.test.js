@@ -67,13 +67,24 @@ describe("edge cases", () => {
       edgeStatement.withdraw(1001);
     }).toThrow("Insufficient funds");
   });
-  it("amount rounded DOWN if more than 2 numbers appear after the decimal point for deposits", () => {
+  it("amount rounded down if more than 2 numbers appear after the decimal point for deposits", () => {
     edgeStatement.deposit(314.159);
     expect(edgeStatement.balance).not.toEqual(1314.16);
     expect(edgeStatement.balance).toEqual(1314.15);
   });
-  it("amount rounded if more than 2 numbers appear after the decimal point for withdrawals", () => {
+  it("amount rounded down if more than 2 numbers appear after the decimal point for withdrawals", () => {
     edgeStatement.withdraw(141.429);
+    expect(edgeStatement.balance).not.toEqual(858.57);
     expect(edgeStatement.balance).toEqual(858.58);
+  });
+  it("error is thrown if the input in the deposit method is not a number", () => {
+    expect(() => {
+      edgeStatement.deposit("I am not a number");
+    }).toThrow("Funds deposited must be a number");
+  });
+  it("error is thrown if the input in the withdraw method is not a number", () => {
+    expect(() => {
+      edgeStatement.withdraw("7777");
+    }).toThrow("Funds withdrawn must be a number");
   });
 });
