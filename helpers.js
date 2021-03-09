@@ -10,7 +10,7 @@ const helpers = {
   },
   roundDownToTwoDecimalPlaces: (num) => Math.floor(num * 100) / 100,
   statementHeader: () => "date || credit || debit || balance",
-  initialCredit: () => "10/01/2012 || 1000.00 || || 1000.00",
+  initialCreditTransaction: () => "10/01/2012 || 1000.00 || || 1000.00",
 };
 
 module.exports = helpers;

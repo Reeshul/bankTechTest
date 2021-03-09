@@ -51,9 +51,9 @@ class BankStatement {
   }
 
   printStatement() {
-    return `${helpers.statementHeader()}\n${
+    return `${`${helpers.statementHeader()}\n${
       this.statement
-    }${helpers.initialCredit()}`;
+    }${helpers.initialCreditTransaction()}`.toString()}`;
   }
 }
 
