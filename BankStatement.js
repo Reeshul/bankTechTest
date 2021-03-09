@@ -31,13 +31,13 @@ class BankStatement {
     if (typeof amount !== "number") {
       throw new Error("Funds withdrawn must be a number");
     } else {
-      if (amount <= this.balance) {
+      if (amount > this.balance) {
+        throw new Error("Insufficient funds");
+      } else {
         this.balance -= helpers.roundDownToTwoDecimalPlaces(amount);
         this.updateStatementWithWithdrawTransaction(
           helpers.roundDownToTwoDecimalPlaces(amount)
         );
-      } else {
-        throw new Error("Insufficient funds");
       }
     }
   }
@@ -51,11 +51,9 @@ class BankStatement {
   }
 
   printStatement() {
-    return (
-      "date || credit || debit || balance\n" +
-      `${this.statement}` +
-      "10/01/2012 || 1000.00 || || 1000.00"
-    );
+    return `${helpers.statementHeader()}\n${
+      this.statement
+    }${helpers.initialCredit()}`;
   }
 }
 
