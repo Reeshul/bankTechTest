@@ -30,3 +30,9 @@ JavaScript. Tested using Jest.
 8. To print your statement enter `newAccount.printStatement()`
 
 ![image](./images/screengrab.png)
+
+---
+
+## Test Coverage
+
+![image](./images/test-coverage.png)
