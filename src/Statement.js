@@ -3,6 +3,7 @@ const helpers = require("../helpers/helpers");
 function Statement(transactions) {
   this.printTransactions(transactions);
 }
+
 Statement.prototype.printTransactions = function (transactions) {
   this.statement = helpers.statementHeader;
   transactions.reverse().forEach((transaction) => {

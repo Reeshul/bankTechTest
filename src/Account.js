@@ -10,14 +10,14 @@ function Account() {
 Account.prototype.deposit = function (amount) {
   this.checkValidInput(amount);
   this.creditBalance(amount);
-  this.pushCreditTransaction(this.roundDownToTwoDecimalPlaces(amount));
+  this.pushCreditTransaction(amount);
 };
 
 Account.prototype.withdraw = function (amount) {
   this.checkValidInput(amount);
   this.checkSufficientFunds(amount);
   this.debitBalance(amount);
-  this.pushDebitTransaction(this.roundDownToTwoDecimalPlaces(amount));
+  this.pushDebitTransaction(amount);
 };
 
 Account.prototype.printStatement = function () {
@@ -33,7 +33,7 @@ Account.prototype.pushCreditTransaction = function (amount) {
     new Transaction(
       helpers.todaysDate(),
       "credit",
-      amount.toFixed(2),
+      this.roundDownToTwoDecimalPlaces(amount).toFixed(2),
       this.balance.toFixed(2)
     )
   );
@@ -48,7 +48,7 @@ Account.prototype.pushDebitTransaction = function (amount) {
     new Transaction(
       helpers.todaysDate(),
       "debit",
-      amount.toFixed(2),
+      this.roundDownToTwoDecimalPlaces(amount).toFixed(2),
       this.balance.toFixed(2)
     )
   );
