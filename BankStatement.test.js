@@ -1,5 +1,3 @@
-"use-strict";
-
 const BankStatement = require("./BankStatement");
 const helpers = require("./helpers");
 
@@ -17,26 +15,25 @@ describe("Bank Statement", () => {
     });
     it("prints a balance of 1000 if no deposits or withdrawals made", () => {
       expect(newStatement.printStatement()).toEqual(
-        `${helpers.statementHeader()}\n` +
-          `${helpers.initialCreditTransaction()}`
+        `${helpers.statementHeader}\n` + `${helpers.initialCreditTransaction}`
       );
     });
     it("prints a balance of 3000 if a deposit of 2000", () => {
       newStatement.deposit(depositAmount);
       expect(newStatement.printStatement()).toEqual(
-        `${helpers.statementHeader()}\n` +
+        `${helpers.statementHeader}\n` +
           `${helpers.todaysDate()} || 2000.00 || || 3000.00\n` +
-          `${helpers.initialCreditTransaction()}`
+          `${helpers.initialCreditTransaction}`
       );
     });
     it("prints a balance of 2500 if a deposit of 2000 is made followed by a 500 withdrawal", () => {
       newStatement.deposit(depositAmount);
       newStatement.withdraw(withdrawalAmount);
       expect(newStatement.printStatement()).toEqual(
-        `${helpers.statementHeader()}\n` +
+        `${helpers.statementHeader}\n` +
           `${helpers.todaysDate()} || || 500.00 || 2500.00\n` +
           `${helpers.todaysDate()} || 2000.00 || || 3000.00\n` +
-          `${helpers.initialCreditTransaction()}`
+          `${helpers.initialCreditTransaction}`
       );
     });
   });

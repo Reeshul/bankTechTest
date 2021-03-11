@@ -1,5 +1,3 @@
-"use-strict";
-
 const helpers = require("./helpers");
 
 class BankStatement {
@@ -11,12 +9,11 @@ class BankStatement {
   deposit(amount) {
     if (typeof amount !== "number") {
       throw new Error("Funds deposited must be a number");
-    } else {
-      this.balance += helpers.roundDownToTwoDecimalPlaces(amount);
-      this.updateStatementWithDepositTransaction(
-        helpers.roundDownToTwoDecimalPlaces(amount)
-      );
     }
+    this.balance += helpers.roundDownToTwoDecimalPlaces(amount);
+    this.updateStatementWithDepositTransaction(
+      helpers.roundDownToTwoDecimalPlaces(amount)
+    );
   }
 
   updateStatementWithDepositTransaction(amount) {
@@ -30,16 +27,14 @@ class BankStatement {
   withdraw(amount) {
     if (typeof amount !== "number") {
       throw new Error("Funds withdrawn must be a number");
-    } else {
-      if (amount > this.balance) {
-        throw new Error("Insufficient funds");
-      } else {
-        this.balance -= helpers.roundDownToTwoDecimalPlaces(amount);
-        this.updateStatementWithWithdrawTransaction(
-          helpers.roundDownToTwoDecimalPlaces(amount)
-        );
-      }
     }
+    if (amount > this.balance) {
+      throw new Error("Insufficient funds");
+    }
+    this.balance -= helpers.roundDownToTwoDecimalPlaces(amount);
+    this.updateStatementWithWithdrawTransaction(
+      helpers.roundDownToTwoDecimalPlaces(amount)
+    );
   }
 
   updateStatementWithWithdrawTransaction(amount) {
@@ -51,9 +46,7 @@ class BankStatement {
   }
 
   printStatement() {
-    return `${`${helpers.statementHeader()}\n${
-      this.statement
-    }${helpers.initialCreditTransaction()}`.toString()}`;
+    return `${helpers.statementHeader}\n${this.statement}${helpers.initialCreditTransaction}`;
   }
 }
 
