@@ -2,70 +2,73 @@ const helpers = require("../helpers/helpers");
 const Transaction = require("./Transaction");
 const Statement = require("./Statement");
 
-class Account {
-  constructor() {
-    this.balance = 0;
-    this.transactions = [];
-  }
-
-  deposit(amount) {
-    this.checkValidInput(amount);
-    this.balance += this.roundDownToTwoDecimalPlaces(amount);
-    this.pushCreditTransaction(this.roundDownToTwoDecimalPlaces(amount));
-  }
-
-  pushCreditTransaction(amount) {
-    this.transactions.push(
-      new Transaction(
-        helpers.todaysDate(),
-        "credit",
-        amount.toFixed(2),
-        this.balance.toFixed(2)
-      )
-    );
-  }
-
-  withdraw(amount) {
-    this.checkValidInput(amount);
-    this.checkSufficientFunds(amount);
-    this.balance -= this.roundDownToTwoDecimalPlaces(amount);
-    this.pushDebitTransaction(this.roundDownToTwoDecimalPlaces(amount));
-  }
-
-  pushDebitTransaction(amount) {
-    const withdrawalAmount = amount.toFixed(2);
-    const currentBalance = this.balance.toFixed(2);
-    this.transactions.push(
-      new Transaction(
-        helpers.todaysDate(),
-        "debit",
-        withdrawalAmount,
-        currentBalance
-      )
-    );
-  }
-
-  printStatement() {
-    return new Statement(this.transactions).statement;
-  }
-
-  checkValidInput(amount) {
-    if (typeof amount !== "number") {
-      throw new Error("Input must be a number");
-    }
-  }
-
-  checkSufficientFunds(amount) {
-    if (amount > this.balance) {
-      throw new Error("Insufficient funds");
-    }
-  }
-
-  roundDownToTwoDecimalPlaces(num) {
-    return Math.floor(num * 100) / 100;
-  }
+function Account() {
+  this.balance = 0;
+  this.transactions = [];
 }
 
-kitty = new Account();
+Account.prototype.deposit = function (amount) {
+  this.checkValidInput(amount);
+  this.creditBalance(amount);
+  this.pushCreditTransaction(amount);
+};
+
+Account.prototype.withdraw = function (amount) {
+  this.checkValidInput(amount);
+  this.checkSufficientFunds(amount);
+  this.debitBalance(amount);
+  this.pushDebitTransaction(amount);
+};
+
+Account.prototype.printStatement = function () {
+  return new Statement(this.transactions).statement;
+};
+
+Account.prototype.creditBalance = function (amount) {
+  this.balance += this.roundDownToTwoDecimalPlaces(amount);
+};
+
+Account.prototype.pushCreditTransaction = function (amount) {
+  this.transactions.push(
+    new Transaction(
+      helpers.todaysDate(),
+      "credit",
+      this.roundDownToTwoDecimalPlaces(amount).toFixed(2),
+      this.balance.toFixed(2)
+    )
+  );
+};
+
+Account.prototype.debitBalance = function (amount) {
+  this.balance -= this.roundDownToTwoDecimalPlaces(amount);
+};
+
+Account.prototype.pushDebitTransaction = function (amount) {
+  this.transactions.push(
+    new Transaction(
+      helpers.todaysDate(),
+      "debit",
+      this.roundDownToTwoDecimalPlaces(amount).toFixed(2),
+      this.balance.toFixed(2)
+    )
+  );
+};
+
+Account.prototype.checkValidInput = (amount) => {
+  if (typeof amount !== "number") {
+    throw new Error("Input must be a number");
+  }
+};
+
+Account.prototype.checkSufficientFunds = function (amount) {
+  if (amount > this.balance) {
+    throw new Error("Insufficient funds");
+  }
+};
+
+Account.prototype.roundDownToTwoDecimalPlaces = (num) =>
+  Math.floor(num * 100) / 100;
+
+global.kitty = new Account();
 
 module.exports = Account;
