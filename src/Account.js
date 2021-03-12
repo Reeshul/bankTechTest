@@ -11,6 +11,7 @@ Account.prototype.deposit = function (amount) {
   this.checkValidInput(amount);
   this.creditBalance(amount);
   this.pushCreditTransaction(amount);
+  return this.showBalance();
 };
 
 Account.prototype.withdraw = function (amount) {
@@ -18,6 +19,7 @@ Account.prototype.withdraw = function (amount) {
   this.checkSufficientFunds(amount);
   this.debitBalance(amount);
   this.pushDebitTransaction(amount);
+  return this.showBalance();
 };
 
 Account.prototype.printStatement = function () {
@@ -52,6 +54,10 @@ Account.prototype.pushDebitTransaction = function (amount) {
       this.balance.toFixed(2)
     )
   );
+};
+
+Account.prototype.showBalance = function () {
+  return `Your balance is: ${this.balance}`;
 };
 
 Account.prototype.checkValidInput = (amount) => {
