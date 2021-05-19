@@ -1,6 +1,6 @@
 # Bank Tech Test
 
-Individual tech test.
+Individual tech test. The instructions for the challenge can be found [here](./instructions.md).
 
 ## Objective
 
